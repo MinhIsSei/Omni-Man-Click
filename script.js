@@ -15,6 +15,45 @@ container.addEventListener("mousedown", function () {
   audio.play();
 });
 
+container.addEventListener(
+  "mousedown",
+  _.debounce(async () => {
+    let IdUserUpdate = 1;
+    //dữ liệu muốn update
+    let newDataUpdate = {
+      // let a = await fetch(
+      //   `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     },
+      //     //gửi data muốn update lên dạng json
+      //     body: JSON.stringify(newDataUpdate)
+      //   }
+      // ),
+      // newClick: a.newClick+score,
+      newClick:2000,
+    };
+
+    let userData = await fetch(
+      `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        //gửi data muốn update lên dạng json
+        body: JSON.stringify(newDataUpdate)
+      }
+    );
+    //convert data trả về sang object
+    let dataConverted = await userData.json();
+    console.log(dataConverted);
+    return dataConverted;
+    //sau 2 giây sẽ gửi lên api
+    }, 2000)
+);
 container.addEventListener("mouseup", function () {
   img.src = "./img/OmniMan.gif";
   audio.play();
@@ -24,6 +63,33 @@ body.addEventListener("keydown", function () {
   img.src = "./img/ThiccOmniMan.png";
   audio.play();
 });
+
+body.addEventListener(
+  "keydown",
+  _.debounce(async () => {
+    let IdUserUpdate = 1;
+    //dữ liệu muốn update
+    let newDataUpdate = {
+      newClick: 2000
+    };
+    let userData = await fetch(
+      `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        //gửi data muốn update lên dạng json
+        body: JSON.stringify(newDataUpdate)
+      }
+    );
+    //convert data trả về sang object
+    let dataConverted = await userData.json();
+    console.log(dataConverted);
+    return dataConverted;
+    //sau 2 giây sẽ gửi lên api
+    }, 2000) 
+);
 
 body.addEventListener("keyup", function () {
   img.src = "./img/OmniMan.gif";
@@ -46,8 +112,6 @@ container.addEventListener("touchmove", function () {
 function increaseScore() {
   score++;
   count.innerHTML = score;
-  main();
- 
 }
 
 music.addEventListener("mousedown", function () {
@@ -118,27 +182,4 @@ leaderToggle.addEventListener("click", () => {
 // main();
 
 
-async function getData() {
-  try {
-    const result = await fetch(
-      "https://613483b1bbc9840017de4fd1.mockapi.io/api/user/1"
-    );
-    const resultConverted = await result.json();
-    return(resultConverted);
-  } catch (error) {
-    console.log("Lay data bi loi");
-  }
-}
 
-async function main() {
-  let totalScore = await getData()
-  totalScore.click ++;
-  fetch("https://613483b1bbc9840017de4fd1.mockapi.io/api/user/1", {
-    method: "PUT",
-    headers:{"Content-Type": "application/json"},
-})
-  total.innerHTML = totalScore.click;
-  console.log(totalScore);
-}
-
-// main()
