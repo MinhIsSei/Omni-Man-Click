@@ -20,21 +20,24 @@ container.addEventListener(
   _.debounce(async () => {
     let IdUserUpdate = 1;
     //dữ liệu muốn update
-    let newDataUpdate = {
-      // let a = await fetch(
-      //   `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
-      //   {
-      //     method: "GET",
-      //     headers: {
-      //       "Content-Type": "application/json"
-      //     },
-      //     //gửi data muốn update lên dạng json
-      //     body: JSON.stringify(newDataUpdate)
-      //   }
-      // ),
-      // newClick: a.newClick+score,
-      newClick:2000,
-    };
+    let a ;
+    let newDataUpdate = await fetch(
+      `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        //gửi data muốn update lên dạng json
+        body: JSON.stringify(newDataUpdate)
+      }
+    );
+
+    a = newDataUpdate;
+    console.log(newDataUpdate);
+    let dataUpdated = {
+      newClick: a.newClick + score,
+    }
 
     let userData = await fetch(
       `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
@@ -44,7 +47,7 @@ container.addEventListener(
           "Content-Type": "application/json"
         },
         //gửi data muốn update lên dạng json
-        body: JSON.stringify(newDataUpdate)
+        body: JSON.stringify(userData)
       }
     );
     //convert data trả về sang object
@@ -64,32 +67,32 @@ body.addEventListener("keydown", function () {
   audio.play();
 });
 
-body.addEventListener(
-  "keydown",
-  _.debounce(async () => {
-    let IdUserUpdate = 1;
-    //dữ liệu muốn update
-    let newDataUpdate = {
-      newClick: 2000
-    };
-    let userData = await fetch(
-      `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        //gửi data muốn update lên dạng json
-        body: JSON.stringify(newDataUpdate)
-      }
-    );
-    //convert data trả về sang object
-    let dataConverted = await userData.json();
-    console.log(dataConverted);
-    return dataConverted;
-    //sau 2 giây sẽ gửi lên api
-    }, 2000) 
-);
+// body.addEventListener(
+//   "keydown",
+//   _.debounce(async () => {
+//     let IdUserUpdate = 1;
+//     //dữ liệu muốn update
+//     let newDataUpdate = {
+//       newClick: 2000
+//     };
+//     let userData = await fetch(
+//       `https://613483b1bbc9840017de4fd1.mockapi.io/api/user/${IdUserUpdate}`,
+//       {
+//         method: "PUT",
+//         headers: {
+//           "Content-Type": "application/json"
+//         },
+//         //gửi data muốn update lên dạng json
+//         body: JSON.stringify(newDataUpdate)
+//       }
+//     );
+//     //convert data trả về sang object
+//     let dataConverted = await userData.json();
+//     console.log(dataConverted);
+//     return dataConverted;
+//     //sau 2 giây sẽ gửi lên api
+//     }, 2000) 
+// );
 
 body.addEventListener("keyup", function () {
   img.src = "./img/OmniMan.gif";
